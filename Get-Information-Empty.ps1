@@ -6,7 +6,7 @@ CLS
 # ------------
 # - Opciones -
 # ------------
-# Mostrar o no las listas de usuarios y grupos
+# Show list of users and groups
 $users='true'
 $groups='true'
 # ----------------------------

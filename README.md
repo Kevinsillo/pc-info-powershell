@@ -1,5 +1,5 @@
-# pc-info-powershell
-That is a simple script for gather information of any computer with Powershell.
+# PC information Powershell
+That is a simple script for gather information of any computer with Powershell and send to email.
 
 ## Modify
 Edit the file to change email options and users/groups list

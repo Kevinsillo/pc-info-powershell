@@ -1,17 +1,17 @@
-# --------------------------------------
-# - Script para captura de información -
-# --------------------------------------
+# ---------------------------------
+# - Script for gather information -
+# ---------------------------------
 ECHO OFF
 CLS
-# ------------
-# - Opciones -
-# ------------
+# -----------
+# - Options -
+# -----------
 # Show list of users and groups
 $users='true'
 $groups='true'
-# ----------------------------
-# - Datos de envio de correo -
-# ----------------------------
+# -------------------
+# - Send email data -
+# -------------------
 $from = ''
 $to = ''
 $smtp = ''
@@ -37,9 +37,9 @@ $file="$client - $env:COMPUTERNAME.txt"
 
 $outlookApplication = New-Object -ComObject 'Outlook.Application'
 $outlook = $outlookApplication.Application.Session.Accounts | Select-Object DisplayName
-# ---------------------
-# - Formato de salida -
-# ---------------------
+# --------------
+# - Out format -
+# --------------
 ECHO "-----------------------------------------------------------------------" > $file
 ECHO "COMPUTER INFORMATION - $((get-date).tostring('dd-MM-yyyy'))" >> $file
 ECHO "-----------------------------------------------------------------------" >> $file
@@ -73,9 +73,9 @@ if ($groups -eq 'true') {
     $groups = Get-Localgroup
     ECHO $groups.name >> $file
 }
-# -----------------
-# - Envio de Mail -
-# -----------------
+# --------------
+# - Send email -
+# --------------
 $send = read-host "Send mail with summary? [Y/N]"
 if ($send -eq 'Y') {
     $subject = "$client - $env:COMPUTERNAME"

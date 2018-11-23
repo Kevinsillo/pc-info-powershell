@@ -62,7 +62,7 @@ if ($sharedfolders -eq 'true') {
     ECHO "-----------------------------------------------------------------------" >> $file
     ECHO "Shared folders" >> $file
     ECHO "-----------------------------------------------------------------------" >> $file
-    $sharedfolders = get-WmiObject -class Win32_Share
+    $sharedfolders = get-WmiObject -class Win32_Share | where {$_.path -ne ""}
     ECHO $sharedfolders.path >> $file
 }
 if ($users -eq 'true') {

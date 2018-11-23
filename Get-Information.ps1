@@ -9,6 +9,7 @@ CLS
 # Show list of users and groups
 $users='true'
 $groups='true'
+$sharedfolders='true'
 # -------------------
 # - Send email data -
 # -------------------
@@ -56,7 +57,14 @@ ECHO "-----------------------------------------------------------------------" >
 ECHO "Email Address" >> $file
 ECHO "-----------------------------------------------------------------------" >> $file
 ECHO $outlook.DisplayName >> $file
-
+if ($sharedfolders -eq 'true') {
+    ECHO "" >> $file
+    ECHO "-----------------------------------------------------------------------" >> $file
+    ECHO "Shared folders" >> $file
+    ECHO "-----------------------------------------------------------------------" >> $file
+    $sharedfolders = get-WmiObject -class Win32_Share
+    ECHO $sharedfolders.path >> $file
+}
 if ($users -eq 'true') {
     ECHO "" >> $file
     ECHO "-----------------------------------------------------------------------" >> $file

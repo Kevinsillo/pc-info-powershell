@@ -4,5 +4,5 @@ That is a simple script for gather information of any computer with Powershell a
 ## Modify
 Edit the file to change email options and users/groups list
 
-## Format
+## Out Format example
 ![Example](https://i.imgur.com/913S0uc.png)

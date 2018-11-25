@@ -6,7 +6,7 @@ CLS
 # -----------
 # - Options -
 # -----------
-# Show list of users and groups
+# Show list of users groups and shared folders
 $users='true'
 $groups='true'
 $sharedfolders='true'

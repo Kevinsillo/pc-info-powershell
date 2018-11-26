@@ -1,6 +1,12 @@
-# ---------------------------------
-# - Script for gather information -
-# ---------------------------------
+################################################################
+#                                                              #
+#   AUTOR: Kevin Illanas                                       #
+#   DESCIPTION: Collect information from the computer          #
+#   and send it by mail.                                       #
+#                                                              #
+#   VERSION: 3.0                                               #
+#                                                              #
+################################################################
 ECHO OFF
 CLS
 # -----------
@@ -10,6 +16,7 @@ CLS
 $users='true'
 $groups='true'
 $sharedfolders='true'
+$emailaddress='true'
 # -------------------
 # - Send email data -
 # -------------------
@@ -22,22 +29,14 @@ $port = ''
 # -------------
 $ip = Get-WmiObject Win32_NetworkAdapterConfiguration | Where { $_.Ipaddress.length -gt 1 }
 $ip = $ip.ipaddress[0]
-
 $core = Get-CimInstance -ClassName Win32_Processor | Select-Object Name
 $core = $core.name
-
 $ram = Get-Ciminstance Win32_OperatingSystem | Select-Object @{Name = "total";Expression = {[int]($_.TotalVisibleMemorySize/1mb)}}
 $ram = $ram.total
-
 $domain = Get-CimInstance -ClassName Win32_ComputerSystem | Select-Object Domain
 $domain = $domain.domain
-
 $client = read-host "Client name?"
-
 $file="$client - $env:COMPUTERNAME.txt"
-
-$outlookApplication = New-Object -ComObject 'Outlook.Application'
-$outlook = $outlookApplication.Application.Session.Accounts | Select-Object DisplayName
 # --------------
 # - Out format -
 # --------------
@@ -54,10 +53,14 @@ ECHO "PROCESSOR: $core" >> $file
 ECHO "MEMORY RAM: $ram GB" >> $file
 ECHO "" >> $file
 Get-Wmiobject win32_logicaldisk -Filter "DriveType=3" | Select @{name="Unit";Expression={$_.Name}},@{name="Format";Expression={$_.FileSystem}},@{name="Name";Expression={$_.VolumeName}},@{n="Free Space";e={[math]::truncate($_.freespace / 1GB)}} >> $file
-ECHO "-----------------------------------------------------------------------" >> $file
-ECHO "EMAIL ADDRESS" >> $file
-ECHO "-----------------------------------------------------------------------" >> $file
-ECHO $outlook.DisplayName >> $file
+if ($emailaddress -eq 'true') {
+    ECHO "-----------------------------------------------------------------------" >> $file
+    ECHO "EMAIL ADDRESS" >> $file
+    ECHO "-----------------------------------------------------------------------" >> $file
+    $outlookApplication = New-Object -ComObject 'Outlook.Application'
+    $outlook = $outlookApplication.Application.Session.Accounts | Select-Object DisplayName
+    ECHO $outlook.DisplayName >> $file
+}
 if ($sharedfolders -eq 'true') {
     ECHO "" >> $file
     ECHO "-----------------------------------------------------------------------" >> $file

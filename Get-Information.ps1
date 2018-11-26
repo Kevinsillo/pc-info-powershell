@@ -47,6 +47,7 @@ ECHO "-----------------------------------------------------------------------" >
 ECHO "Client: $client" >> $file
 ECHO "Computer name: $env:COMPUTERNAME" >> $file
 ECHO "Actual user: $env:USERNAME" >> $file
+ECHO "Carpeta usuario actual: $env:USERPROFILE" >> $file
 ECHO "IP address: $ip" >> $file
 ECHO "Domain/Workgroup: $domain" >> $file
 ECHO "Processor: $core" >> $file
@@ -86,7 +87,7 @@ if ($groups -eq 'true') {
 # --------------
 $send = read-host "Send mail with summary? [Y/N]"
 if ($send -eq 'Y') {
-    $subject = "$client - $env:COMPUTERNAME"
+    $subject = "$client - User:$env:USERNAME PC:$env:COMPUTERNAME"
     $body = Get-Content $file -Encoding 'UTF8' | Out-String
     $credencial = Get-Credential
     Send-MailMessage -From $from -To $to -Subject $subject -Body $body -SmtpServer $smtp -Port $port -Encoding 'UTF8' -Credential $credencial

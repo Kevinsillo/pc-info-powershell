@@ -40,6 +40,7 @@ $file="$company - $owner - $env:COMPUTERNAME.txt"
 # --------------
 ECHO "-----------------------------------------------------------------------" > $file
 ECHO "COMPUTER INFORMATION - $((get-date).tostring('dd-MM-yyyy'))" >> $file
+ECHO "By Kevin Illanas - 2018" >> $file
 ECHO "-----------------------------------------------------------------------" >> $file
 ECHO "COMPANY: $company" >> $file
 ECHO "COMPUTER NAME: $env:COMPUTERNAME" >> $file

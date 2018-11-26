@@ -44,7 +44,7 @@ ECHO "-----------------------------------------------------------------------" >
 ECHO "COMPUTER INFORMATION - $((get-date).tostring('dd-MM-yyyy'))" >> $file
 ECHO "-----------------------------------------------------------------------" >> $file
 ECHO "CLIENT: $client" >> $file
-ECHO "COMPUTER name: $env:COMPUTERNAME" >> $file
+ECHO "COMPUTER NAME: $env:COMPUTERNAME" >> $file
 ECHO "CURRENT USER: $env:USERNAME" >> $file
 ECHO "CURRENT USER FOLDER: $env:USERPROFILE" >> $file
 ECHO "IP ADDRESS: $ip" >> $file

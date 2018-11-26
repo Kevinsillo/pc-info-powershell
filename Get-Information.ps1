@@ -43,14 +43,14 @@ ECHO "COMPUTER INFORMATION - $((get-date).tostring('dd-MM-yyyy'))" >> $file
 ECHO "-----------------------------------------------------------------------" >> $file
 ECHO "COMPANY: $company" >> $file
 ECHO "COMPUTER NAME: $env:COMPUTERNAME" >> $file
-ECHO "CURRENT USER: $env:USERNAME" >> $file
-ECHO "CURRENT USER FOLDER: $env:USERPROFILE" >> $file
-ECHO "IP ADDRESS: $ip" >> $file
 if ($domain -eq 'true') {
     ECHO "DOMAIN: $domainName"  >> $file
 } else {
     ECHO "WORKGROUP: $domainName" >> $file
 }
+ECHO "CURRENT USER: $env:USERNAME" >> $file
+ECHO "CURRENT USER FOLDER: $env:USERPROFILE" >> $file
+ECHO "IP ADDRESS: $ip" >> $file
 ECHO "PROCESSOR: $core" >> $file
 ECHO "MEMORY: $ram" >> $file
 ECHO "" >> $file

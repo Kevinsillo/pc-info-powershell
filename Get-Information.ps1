@@ -69,9 +69,9 @@ if ($sharedfolders -eq 'true') {
 if ($users -eq 'true') {
     ECHO "" >> $file
     ECHO "-----------------------------------------------------------------------" >> $file
-    ECHO "Local users" >> $file
+    ECHO "Active local users" >> $file
     ECHO "-----------------------------------------------------------------------" >> $file
-    $users = Get-Localuser
+    $users = Get-Localuser | where {$_.enabled -eq "true"}
     ECHO $users.name >> $file
 }
 if ($groups -eq 'true') {

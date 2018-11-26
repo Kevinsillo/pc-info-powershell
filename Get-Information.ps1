@@ -4,7 +4,7 @@
 #   DESCIPTION: Collect information from the computer          #
 #   and send it by mail.                                       #
 #                                                              #
-#   VERSION: 3.0                                               #
+#   VERSION: 4.0                                               #
 #                                                              #
 ################################################################
 ECHO OFF
@@ -42,7 +42,7 @@ ECHO "-----------------------------------------------------------------------" >
 ECHO "COMPUTER INFORMATION" >> $file
 ECHO "By Kevin Illanas - 2018" >> $file
 ECHO "-----------------------------------------------------------------------" >> $file
-ECHO "DATE: $((get-date).tostring('dd-MM-yyyy'))"
+ECHO "DATE: $((get-date).tostring('dd-MM-yyyy'))" >> $file
 ECHO "COMPANY: $company" >> $file
 ECHO "COMPUTER NAME: $env:COMPUTERNAME" >> $file
 if ($domain -eq 'true') {

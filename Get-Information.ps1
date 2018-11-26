@@ -39,9 +39,10 @@ $file="$company - $owner - $env:COMPUTERNAME.txt"
 # - Out format -
 # --------------
 ECHO "-----------------------------------------------------------------------" > $file
-ECHO "COMPUTER INFORMATION - $((get-date).tostring('dd-MM-yyyy'))" >> $file
+ECHO "COMPUTER INFORMATION >> $file
 ECHO "By Kevin Illanas - 2018" >> $file
 ECHO "-----------------------------------------------------------------------" >> $file
+ECHO "DATE: $((get-date).tostring('dd-MM-yyyy'))"
 ECHO "COMPANY: $company" >> $file
 ECHO "COMPUTER NAME: $env:COMPUTERNAME" >> $file
 if ($domain -eq 'true') {

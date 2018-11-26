@@ -44,24 +44,24 @@ $outlook = $outlookApplication.Application.Session.Accounts | Select-Object Disp
 ECHO "-----------------------------------------------------------------------" > $file
 ECHO "COMPUTER INFORMATION - $((get-date).tostring('dd-MM-yyyy'))" >> $file
 ECHO "-----------------------------------------------------------------------" >> $file
-ECHO "Client: $client" >> $file
-ECHO "Computer name: $env:COMPUTERNAME" >> $file
-ECHO "Actual user: $env:USERNAME" >> $file
-ECHO "Carpeta usuario actual: $env:USERPROFILE" >> $file
-ECHO "IP address: $ip" >> $file
-ECHO "Domain/Workgroup: $domain" >> $file
-ECHO "Processor: $core" >> $file
-ECHO "Memory RAM: $ram GB" >> $file
+ECHO "CLIENT: $client" >> $file
+ECHO "COMPUTER name: $env:COMPUTERNAME" >> $file
+ECHO "CURRENT USER: $env:USERNAME" >> $file
+ECHO "CURRENT USER FOLDER: $env:USERPROFILE" >> $file
+ECHO "IP ADDRESS: $ip" >> $file
+ECHO "DOMAIN/WORKGROUP: $domain" >> $file
+ECHO "PROCESSOR: $core" >> $file
+ECHO "MEMORY RAM: $ram GB" >> $file
 ECHO "" >> $file
 Get-Wmiobject win32_logicaldisk -Filter "DriveType=3" | Select @{name="Unit";Expression={$_.Name}},@{name="Format";Expression={$_.FileSystem}},@{name="Name";Expression={$_.VolumeName}},@{n="Free Space";e={[math]::truncate($_.freespace / 1GB)}} >> $file
 ECHO "-----------------------------------------------------------------------" >> $file
-ECHO "Email Address" >> $file
+ECHO "EMAIL ADDRESS" >> $file
 ECHO "-----------------------------------------------------------------------" >> $file
 ECHO $outlook.DisplayName >> $file
 if ($sharedfolders -eq 'true') {
     ECHO "" >> $file
     ECHO "-----------------------------------------------------------------------" >> $file
-    ECHO "Shared folders" >> $file
+    ECHO "SHARED FOLDERS" >> $file
     ECHO "-----------------------------------------------------------------------" >> $file
     $sharedfolders = get-WmiObject -class Win32_Share | where {$_.path -ne ""}
     ECHO $sharedfolders.path >> $file
@@ -69,7 +69,7 @@ if ($sharedfolders -eq 'true') {
 if ($users -eq 'true') {
     ECHO "" >> $file
     ECHO "-----------------------------------------------------------------------" >> $file
-    ECHO "Active local users" >> $file
+    ECHO "ACTIVE LOCAL USERS" >> $file
     ECHO "-----------------------------------------------------------------------" >> $file
     $users = Get-Localuser | where {$_.enabled -eq "true"}
     ECHO $users.name >> $file
@@ -77,7 +77,7 @@ if ($users -eq 'true') {
 if ($groups -eq 'true') {
     ECHO "" >> $file
     ECHO "-----------------------------------------------------------------------" >> $file
-    ECHO "Local groups" >> $file
+    ECHO "LOCAL GROUPS" >> $file
     ECHO "-----------------------------------------------------------------------" >> $file
     $groups = Get-Localgroup
     ECHO $groups.name >> $file

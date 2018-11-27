@@ -13,10 +13,10 @@ CLS
 # - Options -
 # -----------
 # Show list of users groups and shared folders
-$users='true'
-$groups='true'
-$sharedfolders='true'
-$emailaddress='true'
+$users = 'true'
+$groups = 'true'
+$sharedfolders = 'true'
+$emailaddress = 'true'
 # -------------------
 # - Send email data -
 # -------------------
@@ -35,7 +35,7 @@ $core = (Get-CimInstance -ClassName Win32_Processor).Name
 $ram = (Get-Ciminstance Win32_OperatingSystem | Select-Object @{Name = "total";Expression = {[int]($_.TotalVisibleMemorySize/1mb)}}).total
 $domainName = (Get-CimInstance -ClassName Win32_ComputerSystem).Domain
 $domain = (Get-WmiObject -Class Win32_ComputerSystem).PartOfDomain
-$file="$company - $owner - $env:COMPUTERNAME.txt"
+$file = "$company - $owner - $env:COMPUTERNAME.txt"
 # --------------
 # - Out format -
 # --------------

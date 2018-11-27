@@ -27,13 +27,14 @@ $port = ''
 # -------------
 # - Variables -
 # -------------
+$company = read-host "Company name?"
+$owner = read-host "Owner name?"
+$send = read-host "Send mail with summary? [Y/N]"
 $ip = (Get-WmiObject Win32_NetworkAdapterConfiguration | Where { $_.Ipaddress.length -gt 1 }).ipaddress[0]
 $core = (Get-CimInstance -ClassName Win32_Processor).Name
 $ram = (Get-Ciminstance Win32_OperatingSystem | Select-Object @{Name = "total";Expression = {[int]($_.TotalVisibleMemorySize/1mb)}}).total
 $domainName = (Get-CimInstance -ClassName Win32_ComputerSystem).Domain
 $domain = (Get-WmiObject -Class Win32_ComputerSystem).PartOfDomain
-$company = read-host "Company name?"
-$owner = read-host "Owner name?"
 $file="$company - $owner - $env:COMPUTERNAME.txt"
 # --------------
 # - Out format -
@@ -91,7 +92,6 @@ if ($groups -eq 'true') {
 # --------------
 # - Send email -
 # --------------
-$send = read-host "Send mail with summary? [Y/N]"
 if ($send -eq 'Y') {
     $subject = "$company - $owner - $env:COMPUTERNAME"
     $credencial = Get-Credential -UserName $from

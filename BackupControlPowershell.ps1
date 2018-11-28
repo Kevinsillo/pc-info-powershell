@@ -1,7 +1,7 @@
 ################################################################
 #                                                              #
 #   AUTOR: Kevin Illanas                                       #
-#   DESCIPTION: Backups with control versions and mails        #
+#   DESCIPTION: Backups with version control and log mail      #
 #                                                              #
 #   VERSION: 1.0                                               #
 #                                                              #

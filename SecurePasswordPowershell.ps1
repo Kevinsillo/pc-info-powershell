@@ -11,12 +11,21 @@ CLS
 # -------------------------------------------------------
 # Options 
 # -------------------------------------------------------
-$pass = 'iXefF3DfPV'
+# Password
+$pass = ''
+# Name of the cert file
 $name = 'cert'
-$route = "$env:USERPROFILE\.cert\"
+# Route of the cert file
+$route = "$env:USERPROFILE\.cer\"
 # -------------------------------------------------------
 # Variables
 # -------------------------------------------------------
+$logName = "securePasswordLog_$((get-date).tostring('yyy-MM-dd')).txt"
+# -------------------------------------------------------
+# Code 
+# -------------------------------------------------------
 MKDIR $route
+ECHO "$((get-date).tostring('HH:mm')) - Folder $route created" > $logName
 $pass | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString | Out-File $route$name
-PAUSE
+ECHO "$((get-date).tostring('HH:mm')) - Cert $route$name created" >> $logName
+Invoke-Item $route

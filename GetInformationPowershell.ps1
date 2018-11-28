@@ -4,7 +4,7 @@
 #   DESCIPTION: Collect information from the computer          #
 #   and send it by mail.                                       #
 #                                                              #
-#   VERSION: 4.0                                               #
+#   VERSION: 5.0                                               #
 #                                                              #
 ################################################################
 ECHO OFF
@@ -12,11 +12,17 @@ CLS
 # -----------
 # - Options -
 # -----------
-# Show list of users groups and shared folders
+# Show list of local users
 $users = 'true'
+# Show list of local groups
 $groups = 'true'
+# Show Windows shared folders
 $sharedfolders = 'true'
+# Show the registered Outlook email address
 $emailaddress = 'true'
+# Secure password route (default route "$env:USERPROFILE\.cert\cert")
+# Create cert with "SecurePasswordPowershell" utility
+$cert = "$env:USERPROFILE\.cert\cert"
 # -------------------
 # - Send email data -
 # -------------------
@@ -30,6 +36,7 @@ $port = ''
 $company = read-host "Company name?"
 $owner = read-host "Owner name?"
 $send = read-host "Send mail with summary? [Y/N]"
+$cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $from, (Get-Content $cert | ConvertTo-SecureString)
 $ip = (Get-WmiObject Win32_NetworkAdapterConfiguration | Where { $_.Ipaddress.length -gt 1 }).ipaddress[0]
 $core = (Get-CimInstance -ClassName Win32_Processor).Name
 $ram = (Get-Ciminstance Win32_OperatingSystem | Select-Object @{Name = "total";Expression = {[int]($_.TotalVisibleMemorySize/1mb)}}).total
@@ -94,6 +101,5 @@ if ($groups -eq 'true') {
 # --------------
 if ($send -eq 'Y') {
     $subject = "$company - $owner - $env:COMPUTERNAME"
-    $credencial = Get-Credential -UserName $from
-    Send-MailMessage -From $from -To $to -Subject $subject -Attachments $file -SmtpServer $smtp -Port $port -Encoding 'UTF8' -Credential $credencial
+    Send-MailMessage -From $from -To $to -Subject $subject -Attachments $file -SmtpServer $smtp -Port $port -Encoding 'UTF8' -Credential $cred
 }

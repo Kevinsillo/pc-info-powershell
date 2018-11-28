@@ -1,7 +1,7 @@
 ################################################################
 #                                                              #
 #   AUTOR: Kevin Illanas                                       #
-#   DESCIPTION: Backups with version control and log mail      #
+#   DESCIPTION: Backups with control versions and mails        #
 #                                                              #
 #   VERSION: 1.0                                               #
 #                                                              #
@@ -25,6 +25,11 @@ $delete = 'false'
 $days = '10'
 # Create log of backups (true / false) 
 $log = 'true'
+# Send email with log
+$send = 'true'
+# Secure password route (default route "$env:USERPROFILE\.cert\cert")
+# Create cert with "SecurePasswordPowershell" utility
+$cert = "$env:USERPROFILE\.cert\cert"
 # -------------------------------------------------------
 # Send email data
 # -------------------------------------------------------
@@ -36,11 +41,11 @@ $port = ''
 # Variables
 # -------------------------------------------------------
 $logName = "backupLog_$((get-date).tostring('yyy-MM-dd')).txt"
-$send = read-host "Send mail with summary log? [Y/N]"
 $toCreate = "$to$((get-date).tostring('yyy-MM-dd'))"
 $oldBackup = (get-date).AddDays(-$days).ToString("yyy-MM-dd")
+$cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $mfrom, (Get-Content $cert | ConvertTo-SecureString)
 # -------------------------------------------------------
-# Controls
+# Control errors
 # -------------------------------------------------------
 if ($from.Count -eq 0) {
     Write-Host "ERROR" -BackgroundColor red
@@ -66,7 +71,7 @@ if ($delete -eq 'true' -and $days.Length -eq 0) {
     PAUSE
     EXIT
 }
-if ($send -eq 'Y') {
+if ($send -eq 'true') {
     if ($mfrom.Length -eq 0 -or $mto.Length -eq 0 -or $smtp.Length -eq 0 -or $port.Length -eq 0) {
         Write-Host "ERROR" -BackgroundColor red
         ECHO "------------------------------------------------------------------"
@@ -88,35 +93,39 @@ if ($send -eq 'Y') {
 # Code 
 # -------------------------------------------------------
 MKDIR $toCreate
+ECHO "$((get-date).tostring('HH:mm')) - Folder $toCreate created" > $logName
+if ($delete -eq 'true') {
+    if ($log -eq 'true') {
+        ECHO "$((get-date).tostring('HH:mm')) - Deleting old backups" >> $logName
+    }
+    RD -Force -Recurse -ErrorAction SilentlyContinue $to$oldBackup
+    if ($log -eq 'true') {
+        ECHO "$((get-date).tostring('HH:mm')) - Deleted the old backup $to$oldBackup" >> $logName
+    }
+}
 if ($log -eq 'true') {
-    ECHO "Copying items at $((get-date).tostring('HH:mm'))" > $logName
+    ECHO "$((get-date).tostring('HH:mm')) - Copying items" >> $logName
 }
 For ($i=0; $i -lt $from.Count; $i++) {
     $fromi = $from[$i]
     Copy-Item -Path $from[$i] -Destination $toCreate
     if ($log -eq 'true') {
-        ECHO "$i.- Copied the item   $fromi   to   $toCreate" >> $logName
+        ECHO "$((get-date).tostring('HH:mm')) - $i.- Copied the item   $fromi   to   $toCreate" >> $logName
     }
 }
 if ($log -eq 'true') {
-    ECHO "Backup finalized at $((get-date).tostring('HH:mm'))" >> $logName
-}
-if ($delete = 'true') {
-    if ($log -eq 'true') {
-        ECHO "Deleting old backups at $((get-date).tostring('HH:mm'))" >> $logName
-    }
-    RD -Force -Recurse -ErrorAction SilentlyContinue $to$oldBackup
-    if ($log -eq 'true') {
-        ECHO "Deleted the old backup $to$oldBackup at $((get-date).tostring('HH:mm'))" >> $logName
-    }
+    ECHO "$((get-date).tostring('HH:mm')) - Backup finalized" >> $logName
 }
 # -------------------------------------------------------
 # Send email
 # -------------------------------------------------------
-if ($send -eq 'Y') {
+if ($send -eq 'true') {
     if ($log -eq 'true') {
         $subject = "Backup report log of $env:COMPUTERNAME"
-        $credencial = Get-Credential -UserName $mfrom
-        Send-MailMessage -From $mfrom -To $mto -Subject $subject -Attachments $logName -SmtpServer $smtp -Port $port -Encoding 'UTF8' -Credential $credencial
+        Send-MailMessage -From $mfrom -To $mto -Subject $subject -Attachments $logName -SmtpServer $smtp -Port $port -Encoding 'UTF8' -Credential $cred
+    }
+} else {
+    if ($log -eq 'true') {
+        ECHO "$((get-date).tostring('HH:mm')) - Email omitted" >> $logName
     }
 }

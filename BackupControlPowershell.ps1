@@ -43,6 +43,7 @@ $port = ''
 $logName = "backupLog_$((get-date).tostring('yyy-MM-dd')).txt"
 $toCreate = "$to$((get-date).tostring('yyy-MM-dd'))"
 $oldBackup = (get-date).AddDays(-$days).ToString("yyy-MM-dd")
+$subject = "Backup report log of $env:COMPUTERNAME"
 $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $mfrom, (Get-Content $cert | ConvertTo-SecureString)
 # -------------------------------------------------------
 # Control errors
@@ -110,7 +111,7 @@ For ($i=0; $i -lt $from.Count; $i++) {
     $fromi = $from[$i]
     Copy-Item -Path $from[$i] -Destination $toCreate
     if ($log -eq 'true') {
-        ECHO "$((get-date).tostring('HH:mm')) - $i.- Copied the item   $fromi   to   $toCreate" >> $logName
+        ECHO "$((get-date).tostring('HH:mm')) - $i.- Copied the item $fromi to $toCreate" >> $logName
     }
 }
 if ($log -eq 'true') {
@@ -121,7 +122,6 @@ if ($log -eq 'true') {
 # -------------------------------------------------------
 if ($send -eq 'true') {
     if ($log -eq 'true') {
-        $subject = "Backup report log of $env:COMPUTERNAME"
         Send-MailMessage -From $mfrom -To $mto -Subject $subject -Attachments $logName -SmtpServer $smtp -Port $port -Encoding 'UTF8' -Credential $cred
     }
 } else {

@@ -3,7 +3,7 @@
 #   AUTOR: Kevin Illanas                                       #
 #   DESCIPTION: Backups with control versions and mails        #
 #                                                              #
-#   VERSION: 1.0                                               #
+#   VERSION: 2.0                                               #
 #                                                              #
 ################################################################
 ECHO OFF

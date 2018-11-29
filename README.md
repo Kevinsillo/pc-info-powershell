@@ -2,7 +2,7 @@
 These are some tools written in powershell to perform different automated tasks such as backups or obtain information from a computer.
 
 ## 1.- SecurePasswordPowershell
-Generate a "cred" file with your encripted password (**%pUSERPROFILE%/.cred/cred**)
+Generate a "cred" file with your encripted password (**%USERPROFILE%/.cred/cred**)
 
 ### How to Use
 Edit file and introduce your password. Then you can run script for generate file.

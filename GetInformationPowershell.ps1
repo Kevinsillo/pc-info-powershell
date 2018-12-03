@@ -36,7 +36,6 @@ $port = ''
 $company = read-host "Company name?"
 $owner = read-host "Owner name?"
 $send = read-host "Send mail with summary? [Y/N]"
-$cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $from, (Get-Content $cert | ConvertTo-SecureString)
 $ip = (Get-WmiObject Win32_NetworkAdapterConfiguration | Where { $_.Ipaddress.length -gt 1 }).ipaddress[0]
 $core = (Get-CimInstance -ClassName Win32_Processor).Name
 $ram = (Get-Ciminstance Win32_OperatingSystem | Select-Object @{Name = "total";Expression = {[int]($_.TotalVisibleMemorySize/1mb)}}).total
@@ -102,6 +101,7 @@ if ($groups -eq 'true') {
 # - Send email -
 # --------------
 if ($send -eq 'Y') {
+    $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $from, (Get-Content $cert | ConvertTo-SecureString)
     $subject = "$company - $owner - $env:COMPUTERNAME"
     Send-MailMessage -From $from -To $to -Subject $subject -Attachments $file -SmtpServer $smtp -Port $port -Encoding 'UTF8' -Credential $cred
 }

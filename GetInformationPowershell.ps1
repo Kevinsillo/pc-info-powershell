@@ -42,6 +42,7 @@ $core = (Get-CimInstance -ClassName Win32_Processor).Name
 $ram = (Get-Ciminstance Win32_OperatingSystem | Select-Object @{Name = "total";Expression = {[int]($_.TotalVisibleMemorySize/1mb)}}).total
 $domainName = (Get-CimInstance -ClassName Win32_ComputerSystem).Domain
 $domain = (Get-WmiObject -Class Win32_ComputerSystem).PartOfDomain
+$os = (Get-CimInstance -ClassName Win32_OperatingSystem).caption
 $file = "$company - $owner - $env:COMPUTERNAME.txt"
 # --------------
 # - Out format -
@@ -53,6 +54,7 @@ ECHO "-----------------------------------------------------------------------" >
 ECHO "DATE: $((get-date).tostring('dd-MM-yyyy'))" >> $file
 ECHO "COMPANY: $company" >> $file
 ECHO "COMPUTER NAME: $env:COMPUTERNAME" >> $file
+ECHO "OPERATING SYSTEM: $os" >> $file
 if ($domain -eq 'true') {
     ECHO "DOMAIN: $domainName"  >> $file
 } else {

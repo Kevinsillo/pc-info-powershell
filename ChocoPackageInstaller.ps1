@@ -25,8 +25,8 @@ $test = Test-Path -Path C:\ProgramData\chocolatey
 if ($test -eq "True") {
     Write-Host "Chocolatey ya está instalado en su sistema" -ForegroundColor yellow
 } else {
-    Write-Host "Instalando chocolatey..." -ForegroundColor green
-    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    Write-Host "Instalando chocolatey..." -ForegroundColor yellow
+    Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) | Out-Null
     Write-Host "Chocolatey instalado correctamente" -ForegroundColor green
 }
 # -------------------------------------------------------

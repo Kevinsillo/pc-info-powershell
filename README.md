@@ -26,9 +26,11 @@ Edit file to change **OPTIONS** and **SEND EMAIL DATA**. The "delete" and "days"
 Install packages like Linux with Chocolatey. This script install Choco packages from an array.
 
 ### How to Use
-Edit the file and introduce name of Choco packages. Later execute it in Powershell with elevated privileges.
+Edit the file and introduce name of Choco packages.
+Example:
 ```powershell
 $packages = @(
     "vscode","nodejs-lts","postman","mongodb","robo3t","7zip"
     )
 ```
+Later execute it in Powershell with elevated privileges.

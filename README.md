@@ -28,5 +28,5 @@ Install packages like Linux with Chocolatey. This script install Choco packages 
 ### How to Use
 Edit the file and introduce name of Choco packages. Later execute it in Powershell with elevated privileges.
 >$packages = @(
->    "vscode","nodejs-lts","postman","mongodb","robo3t","7zip"
->    )
+    "vscode","nodejs-lts","postman","mongodb","robo3t","7zip"
+    )

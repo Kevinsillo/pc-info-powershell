@@ -21,3 +21,16 @@ Script for backup scheduling, control version, delete old versions and log by em
 
 ### How to Use
 Edit file to change **OPTIONS** and **SEND EMAIL DATA**. The "delete" and "days" options remove old folders of backup (default: 10 days before). You can't send email with log disabled, because the email only send log attached.
+
+## 1.- ChocoPackageInstaller
+Install packages like Linux with Chocolatey. This script install Choco packages from an array.
+
+### How to Use
+Edit the file and introduce name of Choco packages. Later execute it in Powershell with elevated privileges.
+```
+$packages = @(
+    # Arrays example of packages
+    # Web Developer:
+    # "vscode","nodejs-lts","postman","mongodb","robo3t","7zip",
+    )
+```
